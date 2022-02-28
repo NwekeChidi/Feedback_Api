@@ -1,0 +1,3 @@
+- [x] Create folders and arrange folders
+- [x] Initialize npm and install dependencies
+- [x] Configure .env

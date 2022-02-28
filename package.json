@@ -1,5 +1,5 @@
 {
-  "name": "Feedback_api",
+  "name": "feedback_api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +8,8 @@
     "test": "tests"
   },
   "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
