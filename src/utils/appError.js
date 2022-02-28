@@ -8,7 +8,18 @@ class AppError extends Error {
   
       Error.captureStackTrace(this, this.constructor);
     }
+
+    // request error
+    static badRequest(msg) {
+      return new AppError(400, msg);
+    }
+
+    // server error
+    static internal(msg) {
+      return new AppError(500, msg);
+    }
   }
+  
   
   module.exports = AppError;
   
