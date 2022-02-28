@@ -1,3 +1,11 @@
 - [x] Create folders and arrange folders
 - [x] Initialize npm and install dependencies
 - [x] Configure .env
+- [x] Develop server.js
+- [ ] Sign up route
+- [ ] Login route
+- [ ] Create user route
+- [ ] Post feedback route
+- [ ] Comment route
+- [ ] Reply post comment route
+- [ ] Delete comment route
