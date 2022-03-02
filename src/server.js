@@ -6,9 +6,9 @@ const app = require('./app');
 
 //Connecting to the database
 let DB = process.env.DB_LOCAL;
-// if (process.env.NODE_ENV === 'production') {
-//    DB = process.env.DB_CLOUD;
-// }
+if (process.env.NODE_ENV === 'production') {
+  DB = process.env.DB_CLOUD;
+}
 
 mongoose
   .connect(DB, {
