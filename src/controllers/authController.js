@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../errors/appError');
 const { User } = require("../models/user");
-const jwt = require("jsonwebtoken");
+const jwt = require("../services/jwt");
 const bcrypt = require("bcrypt");
 
 
@@ -19,7 +19,6 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
     
     const errors = validationResult(req);
-    console.log(errors.array())
 
     if (!errors.isEmpty()){
         if (errors.array()[0].param === 'email') return next(new AppError("Invalid Email!", 400));
@@ -34,19 +33,10 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     // hash passwords
     const salt = 15;
     const passwordHash = await bcrypt.hash(password, salt);
-    const user = await new User({
-        fullName,
-        userName,
-        email,
-        password: passwordHash
-    }).save();
+    const user = await new User({ fullName, userName, email, password: passwordHash }).save();
 
-    // create token
-    const token = jwt.sign(
-        { user_id: user._id },
-        JWT_SECRET,
-        { expiresIn: 60 * 10 }
-    );
+    // Sign Token
+    const token = jwt(user.id).sign;
 
     if (!user) {
         next( new AppError("Could Not Creat User!", 403))
