@@ -4,11 +4,9 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../errors/appError');
 const { User } = require("../models/user");
 const jwt = require("../services/jwt");
-const bcrypt = require("bcrypt");
-
+const bcrypt = require("../services/bcrypt");
 
 require("dotenv").config();
-const JWT_SECRET = process.env.JWT_SECRET;
 
 const userAuth = {};
 
@@ -31,8 +29,7 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
 
     // hash passwords
-    const salt = 15;
-    const passwordHash = await bcrypt.hash(password, salt);
+    const passwordHash = await bcrypt.hash(password)
     const user = await new User({ fullName, userName, email, password: passwordHash }).save();
 
     // Sign Token
@@ -45,8 +42,8 @@ userAuth.signup = catchAsync(async (req, res, next) => {
         message: "User Created Successfully!",
         data: {
             token,
-            userName,
-            email
+            fullName,
+            userName
         }
     })
 })
