@@ -5,8 +5,7 @@ require('dotenv').config();
 const app = require('./app');
 
 //Connecting to the database
-let DB = process.env.DB_LOCAL || "mongodb://localhost:27017/feedback_api";
-console.log(DB)
+let DB = process.env.DB_LOCAL;
 // if (process.env.NODE_ENV === 'production') {
 //    DB = process.env.DB_CLOUD;
 // }
