@@ -2,7 +2,7 @@
 - [x] Initialize npm and install dependencies
 - [x] Configure .env
 - [x] Develop server.js
-- [ ] Sign up route
+- [x] Sign up route
 - [ ] Login route
 - [ ] Create user route
 - [ ] Post feedback route
