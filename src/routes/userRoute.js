@@ -10,4 +10,8 @@ router.post('/signUp',
             body('password').isLength({ min: 6}).matches(/\d/),
             authController.signup);
 
+// login
+router.post('/login',
+            authController.login);
+
 module.exports = router

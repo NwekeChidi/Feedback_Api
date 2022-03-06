@@ -31,19 +31,51 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     const user = await new User({ fullName, userName, email, password: passwordHash }).save();
 
     // Sign Token
-    const token = jwt(user.id).sign;
+    const token = jwt(userName).sign;
 
     if (!user) {
         next( new AppError("Could Not Creat User!", 403))
     }
     res.status(200).send({
         message: "User Created Successfully!",
-        data: {
-            token,
-            fullName,
-            userName
-        }
-    })
+        data: { token, fullName, userName }
+    });
 })
+
+userAuth.login = catchAsync(async (req, res, next) => {
+    // get email and password from form
+    const { nameField, password } = req.body;
+
+    // if email/username or password is absent return error
+    if (!nameField || !password) return next(new AppError("Please Provide Email/UserName And Password!", 400));
+
+    // find user with email or username
+    const user = await User.findOne({ email: nameField }) || await User.findOne({ userName: nameField });
+    if (!user) return next(new AppError("Invalid Email/UserName Or Password!", 400));
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) return next(new AppError("Invalid Email/UserName Or Password!", 400));
+
+    const token = jwt(user.userName).sign;
+
+        res.status(200).send({
+            message: `Hello ${user.userName}! \n Welcome To Our Feedback API`,
+            data : { token, fullName: user.fullName, userName: user.userName }
+        });
+  });
+
+  
+  exports.logout = catchAsync(async (req, res, next) => {
+    // get user
+    let user = await User.findById(req.user.id)
+    // set logout time
+    user.lastLogoutTime = new Date();
+    //  clear token
+    user.token = '';
+    // save user
+    user = await user.save();
+    // send response
+    res.send(user);
+  });
 
 module.exports = userAuth;

@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
-const catchAsync = require('../utils/catchAsync');
 
 exports.hash = (password) => {
     return bcrypt.hash(password, 10);
+};
+
+exports.compare = (inPassword, basePassword) => {
+    return bcrypt.compare(inPassword, basePassword);
 };

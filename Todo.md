@@ -3,8 +3,7 @@
 - [x] Configure .env
 - [x] Develop server.js
 - [x] Sign up route
-- [ ] Login route
-- [ ] Create user route
+- [x] Login route
 - [ ] Post feedback route
 - [ ] Comment route
 - [ ] Reply post comment route
