@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-module.exports =  ( userName ) => {
-    return {
-        sign: jwt.sign( {userName}, process.env.JWT_SECRET, {expiresIn: 60 * 60})
-    }
+exports.sign = ( userName ) => {
+    return jwt.sign( { userName }, process.env.JWT_SECRET, {expiresIn: 60 * 60} );
+}
+
+exports.decode = ( token ) => {
+    return jwt.verify( token, process.env.JWT_SECRET );
 }

@@ -4,6 +4,7 @@
 - [x] Develop server.js
 - [x] Sign up route
 - [x] Login route
+- [x] Logout route
 - [ ] Post feedback route
 - [ ] Comment route
 - [ ] Reply post comment route

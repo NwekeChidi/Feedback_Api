@@ -23,20 +23,21 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
     const userExist = await User.exists({ email });
     if (userExist) return next(new AppError("User With Email Already Exists!", 400));
-    if (await User.exists({ userName })) return next(new AppError("Username Already Exists! Pick A New One!"))
+    if (await User.exists({ userName })) return next(new AppError("Username Already Exists! Pick A New One!"));
 
+
+    // Sign Token
+    const token = jwt.sign(userName);
 
     // hash passwords
     const passwordHash = await bcrypt.hash(password)
-    const user = await new User({ fullName, userName, email, password: passwordHash }).save();
+    const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
 
-    // Sign Token
-    const token = jwt(userName).sign;
 
     if (!user) {
         next( new AppError("Could Not Creat User!", 403))
     }
-    res.status(200).send({
+    res.cookie('auth', token).send({
         message: "User Created Successfully!",
         data: { token, fullName, userName }
     });
@@ -50,32 +51,31 @@ userAuth.login = catchAsync(async (req, res, next) => {
     if (!nameField || !password) return next(new AppError("Please Provide Email/UserName And Password!", 400));
 
     // find user with email or username
-    const user = await User.findOne({ email: nameField }) || await User.findOne({ userName: nameField });
+    let user = await User.findOne({ email: nameField }) || await User.findOne({ userName: nameField });
     if (!user) return next(new AppError("Invalid Email/UserName Or Password!", 400));
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) return next(new AppError("Invalid Email/UserName Or Password!", 400));
 
-    const token = jwt(user.userName).sign;
-
-        res.status(200).send({
-            message: `Hello ${user.userName}! \n Welcome To Our Feedback API`,
-            data : { token, fullName: user.fullName, userName: user.userName }
-        });
-  });
-
-  
-  exports.logout = catchAsync(async (req, res, next) => {
-    // get user
-    let user = await User.findById(req.user.id)
-    // set logout time
-    user.lastLogoutTime = new Date();
-    //  clear token
-    user.token = '';
-    // save user
+    const token = jwt.sign(user.userName);
+    user.token = token;
     user = await user.save();
-    // send response
-    res.send(user);
+
+    // set cookies and send respose
+    res.cookie('auth', token).send({
+        message: `Hello ${user.userName}! Welcome To Our Feedback API`,
+        data : { token, fullName: user.fullName, userName: user.userName }
+    });
+});
+
+
+userAuth.logout = catchAsync(async (req, res, next) => {
+    // get user
+    let user = await User.findById({ _id: req.USER_ID });
+    user.token = '';
+    user = await user.save();
+    res.status(200).send({
+        message: "Logout Successful! Do come back for new posts and feedback!"});
   });
 
 module.exports = userAuth;

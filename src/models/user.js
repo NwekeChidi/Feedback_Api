@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Schema =  mongoose.Schema;
 
 const userSchema = new Schema({
     fullName : {
@@ -18,6 +18,9 @@ const userSchema = new Schema({
     password : {
         type : String,
         required : true
+    },
+    token : {
+        type : String
     }
 },
 {
