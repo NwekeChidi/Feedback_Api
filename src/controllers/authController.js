@@ -23,7 +23,6 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
     const userExist = await User.exists({ email });
     if (userExist) return next(new AppError("User With Email Already Exists!", 400));
-    if (await User.exists({ userName })) return next(new AppError("Username Already Exists! Pick A New One!"));
 
 
     // Sign Token
@@ -34,9 +33,8 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
 
 
-    if (!user) {
-        next( new AppError("Could Not Creat User!", 403))
-    }
+    if (!user) return next( new AppError("Could Not Creat User!", 403));
+    
     res.cookie('auth', token).send({
         message: "User Created Successfully!",
         data: { token, fullName, userName }
@@ -72,7 +70,7 @@ userAuth.login = catchAsync(async (req, res, next) => {
 userAuth.logout = catchAsync(async (req, res, next) => {
     // get user
     let user = await User.findById({ _id: req.USER_ID });
-    if (!user) next(new AppError("User Not Found! Something Went Wrong!", 403))
+    if (!user) return next(new AppError("User Not Found! Something Went Wrong!", 403))
     user.token = '';
     user = await user.save();
     res.status(200).send({
