@@ -72,6 +72,7 @@ userAuth.login = catchAsync(async (req, res, next) => {
 userAuth.logout = catchAsync(async (req, res, next) => {
     // get user
     let user = await User.findById({ _id: req.USER_ID });
+    if (!user) next(new AppError("User Not Found! Something Went Wrong!", 403))
     user.token = '';
     user = await user.save();
     res.status(200).send({
