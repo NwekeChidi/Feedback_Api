@@ -5,7 +5,7 @@
 - [x] Sign up route
 - [x] Login route
 - [x] Logout route
-- [ ] Post feedback route
+- [x] Post feedback route
 - [ ] Comment route
 - [ ] Reply post comment route
 - [ ] Delete comment route

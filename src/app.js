@@ -25,6 +25,7 @@ app.use(morgan('dev'));
 
 //ROUTES
 app.use('/api/v1/users', require('./routes/userRoute'));
+app.use('/api/v1/posts', require('./routes/postRoute'));
 
 app.get('/', (req, res) =>{
   res.status(200).send("Welcome To The Home Page Of Feedback Api!")
