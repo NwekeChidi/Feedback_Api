@@ -13,6 +13,6 @@ exports.auth = async (req, res, next) => {
     const decoded = jwt.decode(token);
     if (!decoded) next(new AppError("User Authorization Failed", 403));
 
-    req.USER_ID = user._id;
+    req.USER_ID = user._id || undefined;
     next();
 }
