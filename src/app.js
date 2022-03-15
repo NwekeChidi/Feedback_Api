@@ -25,9 +25,9 @@ app.use(morgan('dev'));
 
 //ROUTES
 app.use('/api/v1/users', require('./routes/userRoute'));
-app.use('/api/v1/posts', require('./routes/postRoute'));
+app.use('/api/v1', require('./routes/postRoute'));
 
-app.get('/', (req, res) =>{
+app.get('/home', (req, res) =>{
   res.status(200).send("Welcome To The Home Page Of Feedback Api!")
 });
 app.get('/health', (req, res)=>{
