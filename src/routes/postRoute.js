@@ -9,4 +9,10 @@ router.post(
     postController.createPost
 );
 
+// fetch posts
+router.get(
+    '/',
+    postController.getAll
+)
+
 module.exports = router;

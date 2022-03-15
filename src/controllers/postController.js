@@ -2,10 +2,10 @@ const { Post } = require("../models/post");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../errors/appError");
 
-const userController = {};
+const postController = {};
 
 // create post
-userController.createPost = catchAsync( async ( req, res, next ) => {
+postController.createPost = catchAsync( async ( req, res, next ) => {
     let { title, feedback, postTag } = req.body;
     postTag = postTag.toLowerCase();
 
@@ -17,4 +17,10 @@ userController.createPost = catchAsync( async ( req, res, next ) => {
     res.status(200).json({ message: "Post Created Successfully!" });
 })
 
-module.exports = userController;
+// get all posts
+postController.getAll = catchAsync( async (req, res, next ) => {
+    const allPost = await Post.find({}).sort({created_at: 'desc'}).exec();
+    if (!allPost) return(new AppError("Could Not Fetch Posts!", 400));
+    res.status(200).send({allPost});
+})
+module.exports = postController;
