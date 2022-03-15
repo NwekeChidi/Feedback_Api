@@ -6,13 +6,15 @@ const userController = {};
 
 // create post
 userController.createPost = catchAsync( async ( req, res, next ) => {
-    const { feedback } = req.body;
-    if (!feedback) return next(new AppError("Cannot Post Empty Feedback", 401));
+    let { title, feedback, postTag } = req.body;
+    postTag = postTag.toLowerCase();
 
-    const newPost = await new Post({feedback, author: req.USER_ID}).save();
+    if (!feedback || !postTag ) return next(new AppError("Cannot Post Empty Feedback Or Tag", 401));
+
+    const newPost = await new Post({title, feedback, author: req.USER_ID, postTag}).save();
     if (!newPost) return next(new AppError("Could Not Create Post", 400));
 
-    res.status(200).send({ message: "Post Created Successfully!", post: newPost });
+    res.status(200).json({ message: "Post Created Successfully!" });
 })
 
 module.exports = userController;

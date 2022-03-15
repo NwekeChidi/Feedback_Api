@@ -41,6 +41,7 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     });
 })
 
+// Login
 userAuth.login = catchAsync(async (req, res, next) => {
     // get email and password from form
     const { nameField, password } = req.body;
@@ -66,7 +67,7 @@ userAuth.login = catchAsync(async (req, res, next) => {
     });
 });
 
-
+// Logout
 userAuth.logout = catchAsync(async (req, res, next) => {
     // get user
     let user = await User.findById({ _id: req.USER_ID });
