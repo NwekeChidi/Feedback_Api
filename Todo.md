@@ -6,6 +6,6 @@
 - [x] Login route
 - [x] Logout route
 - [x] Post feedback route
-- [ ] Comment route
-- [ ] Reply post comment route
+- [x] Comment route
+- [ ] Reply comment route
 - [ ] Delete comment route

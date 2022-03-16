@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { auth } = require("../middlewares/auth");
 const postController = require("../controllers/postController");
+const commentController = require("../controllers/commentController");
 
 // create post
 router.post(
@@ -13,6 +14,13 @@ router.post(
 router.get(
     '/',
     postController.getAll
-)
+);
+
+// comment on a post
+router.post(
+    '/comment/:postId',
+    auth,
+    commentController.postComment
+);
 
 module.exports = router;
