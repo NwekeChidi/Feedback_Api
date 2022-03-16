@@ -4,6 +4,7 @@ const AppError = require('../errors/appError');
 
 const commentController = {}
 
+// post a comment
 commentController.postComment = catchAsync( async (req, res, next) =>{
     const { comment } = req.body, postId = req.params.postId;
     if (!comment || !postId) return next(new AppError("No Comment Or Post To Comment On!", 400));
@@ -12,15 +13,42 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
         authorId: req.USER_ID,
         comment
     }
-    const newComment = new Comment({ postId });
-    newComment.comments.push(data);
-    await newComment.save();
-    if (!newComment) return next(new AppError("Could Not Comment On Post!", 400));
+    
+    // check if posts already has comments
+    let currComment = await Comment.findOne({ postId });
+    if (currComment){
+        currComment.comments.push(data);
+        await currComment.save();
+    } else {
+        currComment = new Comment({ postId });
+        currComment.comments.push(data);
+        await currComment.save();
+    }
+    if (!currComment) return next(new AppError("Could Not Comment On Post!", 400));
 
     res.status(200).send({
         status: "OK",
-        newComment
+        currComment
     });
 });
+
+// commentController.postComment = catchAsync( async (req, res, next) =>{
+//     const { comment } = req.body, postId = req.params.postId;
+//     if (!comment || !postId) return next(new AppError("No Comment Or Post To Comment On!", 400));
+
+//     const data = {
+//         authorId: req.USER_ID,
+//         comment
+//     }
+//     const newComment = new Comment({ postId });
+//     newComment.comments.push(data);
+//     await newComment.save();
+//     if (!newComment) return next(new AppError("Could Not Comment On Post!", 400));
+
+//     res.status(200).send({
+//         status: "OK",
+//         newComment
+//     });
+// });
 
 module.exports = commentController;
