@@ -61,7 +61,12 @@ userAuth.login = catchAsync(async (req, res, next) => {
     user = await user.save();
 
     // set cookies and send respose
-    res.cookie('auth', token).send({
+    res.cookie('auth', token, {
+        expires : new Date(Date.now() + 86400),
+        httpOnly : true,
+        secure : req.secure || req.headers['x-forwarded-proto'] === "https"
+    });
+    res.status(200).send({
         message: `Hello ${user.userName}! Welcome To Our Feedback API`,
         data : { token, fullName: user.fullName, userName: user.userName }
     });
