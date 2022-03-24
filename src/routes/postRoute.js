@@ -23,4 +23,11 @@ router.post(
     commentController.postComment
 );
 
+// reply a comment on a post
+router.post(
+    '/comment/:commentId',
+    auth,
+    commentController.replyComment
+);
+
 module.exports = router;

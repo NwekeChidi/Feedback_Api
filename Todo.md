@@ -7,5 +7,5 @@
 - [x] Logout route
 - [x] Post feedback route
 - [x] Comment route
-- [ ] Reply comment route
+- [x] Reply comment route
 - [ ] Delete comment route

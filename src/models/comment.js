@@ -17,7 +17,7 @@ const commentSchemma = new Schema(
                 },
                 comment: { type: String },
                 time: {type: Date, default: new Date()},
-                subComment: [ 
+                subComments: [ 
                     { 
                         author: {
                             type: Schema.Types.ObjectId,
