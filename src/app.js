@@ -16,8 +16,10 @@ app.use(cookieParser());
 //Serve static file
 app.use(express.static('public'));
 
-// enable cors for all route
-app.use(cors())
+// enable cors for specific route
+app.use(cors({
+  origin: ['http://localhost','http://localhost:3000', 'http://localhost:3001', "http://localhost:3002" ]
+}))
 
 // enable morgan
 app.use(morgan('dev'));
@@ -34,9 +36,11 @@ app.get('/health', (req, res)=>{
   res.status(200).send('API IS HEALTHY!')
 })
 
+
 app.all('**', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+
 
 app.use(appErrorHandler);
 
