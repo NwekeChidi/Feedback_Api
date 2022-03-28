@@ -6,5 +6,8 @@ exports.sign = ( userName ) => {
 }
 
 exports.decode = ( token ) => {
-    return jwt.verify( token, process.env.JWT_SECRET );
+    return jwt.verify( token, process.env.JWT_SECRET, ( err, decoded )=>{
+        if (err) return null;
+        else return decoded;
+    } );
 }

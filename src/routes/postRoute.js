@@ -7,7 +7,8 @@ const commentController = require("../controllers/commentController");
 router.post(
     '/createPost',
     auth,
-    postController.createPost
+    postController.createPost,
+    postController.getAll
 );
 
 // fetch posts
