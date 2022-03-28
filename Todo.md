@@ -9,7 +9,7 @@
 - [x] Comment endpoint
 - [x] Reply comment endpoint
 - [x] Delete post endpoint
-- [ ] Delete comment endpoint
+- [x] Delete comment endpoint
 - [ ] Delete comment reply endpoint
 - [ ] Edit profile endpoint
 - [ ] Forgot password endpoint

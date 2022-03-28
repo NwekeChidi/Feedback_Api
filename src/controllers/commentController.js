@@ -56,4 +56,14 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     });
 });
 
+// Delete comment
+commentController.deleteComment = catchAsync( async (req, res, next) => {
+    const commentId = req.params?.commentId;
+    const currComment = await Comment.findOne({ commentId });
+    if (!currComment) return next( new AppError(`Comment with id: ${commentId}, not found!`));
+    await currComment.remove();
+
+    res.status(200).send({ message: "Comment Successfully Deleted!"});
+})
+
 module.exports = commentController;
