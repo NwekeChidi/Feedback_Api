@@ -20,7 +20,18 @@ postController.createPost = catchAsync( async ( req, res, next ) => {
 // get all posts
 postController.getAll = catchAsync( async (req, res, next ) => {
     const allPost = await Post.find({}).sort({created_at: 'desc'}).exec();
-    if (!allPost) return(new AppError("Could Not Fetch Posts!", 400));
+    if (!allPost) return next(new AppError("Could Not Fetch Posts!", 400));
     res.status(200).send({allPost});
+})
+
+// delete post
+postController.deletePost = catchAsync( async (req, res, next ) => {
+    const postId = req.params?.postId;
+    const currPost = await Post.findById({ _id: postId });
+
+    if (!currPost) return next(new AppError(`Post with id: ${postId} not found!`, 400));
+    await currPost.remove();
+
+    res.status(200).send({ message: "Post Deleted Successfully!"});
 })
 module.exports = postController;

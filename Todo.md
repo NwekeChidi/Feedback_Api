@@ -8,7 +8,7 @@
 - [x] Post feedback endpoint
 - [x] Comment endpoint
 - [x] Reply comment endpoint
-- [ ] Delete post endpoint
+- [x] Delete post endpoint
 - [ ] Delete comment endpoint
 - [ ] Delete comment reply endpoint
 - [ ] Edit profile endpoint
