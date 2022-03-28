@@ -2,10 +2,14 @@
 - [x] Initialize npm and install dependencies
 - [x] Configure .env
 - [x] Develop server.js
-- [x] Sign up route
-- [x] Login route
-- [x] Logout route
-- [x] Post feedback route
-- [x] Comment route
-- [x] Reply comment route
-- [ ] Delete comment route
+- [x] Sign up endpoint
+- [x] Login endpoint
+- [x] Logout endpoint
+- [x] Post feedback endpoint
+- [x] Comment endpoint
+- [x] Reply comment endpoint
+- [ ] Delete post endpoint
+- [ ] Delete comment endpoint
+- [ ] Delete comment reply endpoint
+- [ ] Edit profile endpoint
+- [ ] Forgot password endpoint
