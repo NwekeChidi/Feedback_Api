@@ -72,10 +72,9 @@ commentController.deleteComment = catchAsync( async (req, res, next) => {
 commentController.deleteCommentReply = catchAsync( async (req, res, next) => {
     const { commentId, replyId } = req?.params;
     const currComment = await Comment.findOne({ replyId });
-
-    
-    const currReply = await currComment.comments.id(commentId).subComments.id(replyId);
-    await currReply.remove();
+    await currComment.comments.id(commentId).subComments.id(replyId).remove();
+    currComment.markModified('subcomments');
+    currComment.save();
     res.status(200).send({ message: "Comment Reply Deleted Successfully!" });
 })
 
