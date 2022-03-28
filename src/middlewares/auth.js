@@ -4,7 +4,7 @@ const jwt = require("../services/jwt");
 const AppError = require("../errors/appError");
 
 exports.auth = async (req, res, next) => {
-    const token = req?.headers.authorization.split(" ")[1];
+    const token = req?.headers.authorization?.split(" ")[1] || null;
     if (!token) return next(new AppError("Token Not Found!", 401));
 
     const decoded = jwt.decode(token);
