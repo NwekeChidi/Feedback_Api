@@ -35,7 +35,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
 // reply a comment
 commentController.replyComment = catchAsync( async (req, res, next) =>{
     const { comment } = req.body, commentId = req.params.commentId;
-    if (!comment || !postId) return next(new AppError("No Comment Or Post To Comment On!", 400));
+    if (!comment || !commentId) return next(new AppError("No Reply or comment to reply!", 400));
 
     const data = {
         author: req.USER_ID,
@@ -43,16 +43,16 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     }
     
     // check if posts already has comments
-    const currPost = await Comment.findOne({ commentId });
-    if (currPost){
-        currPost.comments.id(commentId).subComments.push(data);
-        await currPost.save();
+    const currComment = await Comment.findOne({ commentId });
+    if (currComment){
+        currComment.comments.id(commentId).subComments.push(data);
+        await currComment.save();
     }
-    if (!currPost) return next(new AppError("Could Not Comment On Post!", 403));
+    if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
 
     res.status(200).send({
         status: "OK",
-        currPost
+        currComment
     });
 });
 
@@ -61,9 +61,22 @@ commentController.deleteComment = catchAsync( async (req, res, next) => {
     const commentId = req.params?.commentId;
     const currComment = await Comment.findOne({ commentId });
     if (!currComment) return next( new AppError(`Comment with id: ${commentId}, not found!`));
-    await currComment.remove();
+    await currComment.comments.id(commentId).remove();
+    currComment.markModified('comments');
+    await currComment.save();
 
     res.status(200).send({ message: "Comment Successfully Deleted!"});
+});
+
+// Delete a reply to a comment
+commentController.deleteCommentReply = catchAsync( async (req, res, next) => {
+    const { commentId, replyId } = req?.params;
+    const currComment = await Comment.findOne({ replyId });
+
+    
+    const currReply = await currComment.comments.id(commentId).subComments.id(replyId);
+    await currReply.remove();
+    res.status(200).send({ message: "Comment Reply Deleted Successfully!" });
 })
 
 module.exports = commentController;

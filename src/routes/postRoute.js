@@ -25,7 +25,7 @@ router.post(
 
 // reply a comment on a post
 router.post(
-    '/comment/:commentId',
+    '/replyComment/:commentId',
     auth,
     commentController.replyComment
 );
@@ -43,5 +43,12 @@ router.delete(
     auth,
     commentController.deleteComment
 );
+
+// delete a reply to a comment
+router.delete(
+    '/deleteCommentReply/:commentId/:replyId',
+    auth,
+    commentController.deleteCommentReply
+)
 
 module.exports = router;
