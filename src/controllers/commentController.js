@@ -28,7 +28,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
 
     res.status(200).send({
         status: "OK",
-        currComment
+        comments: currComment.comments
     });
 });
 
@@ -52,7 +52,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
 
     res.status(200).send({
         status: "OK",
-        currComment
+        comments: currComment.comments
     });
 });
 
