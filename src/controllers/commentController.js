@@ -1,6 +1,6 @@
 const { Comment } = require('../models/comment');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../errors/appError');
+const AppError    = require('../errors/appError');
+const catchAsync  = require('../utils/catchAsync');
 
 const commentController = {}
 
@@ -24,7 +24,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
         currComment.comments.push(data);
         await currComment.save();
     }
-    if (!currComment) return next(new AppError("Could Not Comment On Post!", 400));
+    if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
 
     res.status(200).send({
         status: "OK",
@@ -48,7 +48,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
         currPost.comments.id(commentId).subComments.push(data);
         await currPost.save();
     }
-    if (!currPost) return next(new AppError("Could Not Comment On Post!", 400));
+    if (!currPost) return next(new AppError("Could Not Comment On Post!", 403));
 
     res.status(200).send({
         status: "OK",

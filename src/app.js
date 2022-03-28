@@ -1,33 +1,22 @@
 const cors            = require('cors');
 const morgan          = require('morgan');
 const express         = require('express');
-const cookieParser    = require('cookie-parser');
 const AppError        = require('./errors/appError');
 const appErrorHandler = require('./errors/app_error_handler');
 
+// Initalize app
 const app = express();
 
 //Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 
 //Serve static file
 app.use(express.static('public'));
 
 // enable cors for specific route
-app.use(cors({
-  origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:3001', "http://localhost:3002"],
-  credentials: true
-}))
-app.use( (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Headers', true);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', 'POST');
-  next()
-})
+app.use(cors())
 
 // enable morgan
 app.use(morgan('dev'));

@@ -12,7 +12,6 @@ const userAuth = {};
 // User Sign Up
 userAuth.signup = catchAsync(async (req, res, next) => {
     const { fullName, userName, email, password} = req.body;
-
     
     const errors = validationResult(req);
 
@@ -26,7 +25,8 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
 
     // Sign Token
-    const token = jwt.sign(userName);
+    const token = jwt.sign(user.userName);
+    user = await user.save();
 
     // hash passwords
     const passwordHash = await bcrypt.hash(password)
@@ -35,9 +35,10 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
     if (!user) return next( new AppError("Could Not Creat User!", 403));
     
-    res.cookie('auth', token).send({
+    // send response
+    res.status(200).send({
         message: "User Created Successfully!",
-        data: { token, fullName, userName }
+        data : { accessToken, fullName: user.fullName, userName: user.userName }
     });
 })
 
@@ -56,19 +57,14 @@ userAuth.login = catchAsync(async (req, res, next) => {
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) return next(new AppError("Invalid Email/UserName Or Password!", 400));
 
-    const token = jwt.sign(user.userName);
-    user.token = token;
+    const accessToken = jwt.sign(user.userName);
+    user.token = accessToken;
     user = await user.save();
 
-    // set cookies and send respose
-    res.cookie('auth', token, {
-        expires : new Date(Date.now() + 86400),
-        httpOnly : true,
-        secure : req.secure || req.headers['x-forwarded-proto'] === "https"
-    });
+    //send response
     res.status(200).send({
         message: `Hello ${user.userName}! Welcome To Our Feedback API`,
-        data : { token, fullName: user.fullName, userName: user.userName }
+        data : { accessToken, fullName: user.fullName, userName: user.userName }
     });
 });
 
@@ -76,11 +72,10 @@ userAuth.login = catchAsync(async (req, res, next) => {
 userAuth.logout = catchAsync(async (req, res, next) => {
     // get user
     let user = await User.findById({ _id: req.USER_ID });
-    if (!user) return next(new AppError("User Not Found! Something Went Wrong!", 403))
+    if (!user) return next(new AppError("User Not Found! Something Went Wrong!", 400))
     user.token = '';
     user = await user.save();
-    res.status(200).send({
-        message: "Logout Successful! Do come back for new posts and feedback!"});
-  });
+    res.sendStatus(200);
+});
 
 module.exports = userAuth;
