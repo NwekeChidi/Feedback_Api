@@ -13,3 +13,6 @@
 - [x] Delete comment reply endpoint
 - [ ] Edit profile endpoint
 - [ ] Forgot password endpoint
+- [ ] Add tests
+- [ ] Add examples
+- [ ] Update documentation
