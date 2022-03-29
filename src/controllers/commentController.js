@@ -45,7 +45,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     const data = {
         author: req.USER_ID,
         comment,
-        sorter
+        sorter: 1
     }
     
     // check if posts already has comments
