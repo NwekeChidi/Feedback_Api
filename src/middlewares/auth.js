@@ -1,7 +1,7 @@
 // Import dependencies
 const { User }  = require("../models/user");
-const jwt = require("../services/jwt");
-const AppError = require("../errors/appError");
+const jwt       = require("../services/jwt");
+const AppError  = require("../errors/appError");
 
 exports.auth = async (req, res, next) => {
     const token = req?.headers.authorization?.split(" ")[1] || null;
