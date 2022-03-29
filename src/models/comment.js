@@ -17,6 +17,7 @@ const commentSchemma = new Schema(
                 },
                 comment: { type: String },
                 time: {type: Date, default: new Date()},
+                sorter : { type: Number },
                 subComments: [ 
                     { 
                         author: {
@@ -25,7 +26,8 @@ const commentSchemma = new Schema(
                             index: true
                         },
                         comment: {type: String},
-                        time: {type: Date, default: new Date()}
+                        time: {type: Date, default: new Date()},
+                        sorter: { type: Number }
                     }
                 ]
             }

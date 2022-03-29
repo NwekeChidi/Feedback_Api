@@ -11,24 +11,29 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
 
     const data = {
         author: req.USER_ID,
-        comment
+        comment,
+        sorter: 1
     }
     
     // check if posts already has comments
     let currComment = await Comment.findOne({ postId });
     if (currComment){
+        data.sorter += currComment.comments.length;
         currComment.comments.push(data);
         await currComment.save();
     } else {
         currComment = new Comment({ postId });
+        
         currComment.comments.push(data);
         await currComment.save();
     }
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
+    const comments = currComment.comments;
+    comments.sort((a, b) => b.sorter - a.sorter)
 
     res.status(200).send({
         status: "OK",
-        comments: currComment.comments
+        comments,
     });
 });
 
@@ -39,20 +44,24 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
 
     const data = {
         author: req.USER_ID,
-        comment
+        comment,
+        sorter
     }
     
     // check if posts already has comments
     const currComment = await Comment.findOne({ commentId });
     if (currComment){
+        data.sorter += currComment.comments.id(commentId).subComments.length;
         currComment.comments.id(commentId).subComments.push(data);
         await currComment.save();
     }
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
+    const allCommentReplies = currComment.comments.id(commentId).subComments;
+    allCommentReplies.sort((a, b) => b.sorter - a.sorter)
 
     res.status(200).send({
         status: "OK",
-        comments: currComment.comments
+        allCommentReplies
     });
 });
 
