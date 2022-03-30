@@ -27,7 +27,7 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     const passwordHash = await bcrypt.hash(password)
 
     // Sign Token
-    const token = jwt.sign(user.userName);
+    const token = jwt.sign(userName);
 
     // save user
     const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
