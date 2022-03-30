@@ -31,7 +31,6 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
     // save user
     const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
-    await user.save();
 
     if (!user) return next( new AppError("Could Not Creat User!", 403));
     
