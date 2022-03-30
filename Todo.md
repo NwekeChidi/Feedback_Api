@@ -12,6 +12,7 @@
 - [x] Delete comment endpoint
 - [x] Delete comment reply endpoint
 - [ ] Edit profile endpoint
+- [ ] Add upvotes
 - [ ] Forgot password endpoint
 - [ ] Add tests
 - [ ] Add examples
