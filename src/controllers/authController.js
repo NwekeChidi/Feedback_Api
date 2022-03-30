@@ -38,7 +38,7 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     // send response
     res.status(200).send({
         message: "User Created Successfully!",
-        data : { accessToken, fullName: user.fullName, userName: user.userName }
+        data : { accessToken: token, fullName: user.fullName, userName: user.userName }
     });
 })
 
