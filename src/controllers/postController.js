@@ -14,8 +14,9 @@ postController.createPost = catchAsync( async ( req, res, next ) => {
     const newPost = await new Post({ title, feedback, author: req.USER_ID, postTag }).save();
     if (!newPost) return next(new AppError("Could Not Create Post", 400));
 
-    req.message = "Post Created Successfully!";
-    next();
+    req.status(200).send({
+        message: "Post Created Successfully!"
+    });
 })
 
 // get all posts
@@ -33,8 +34,7 @@ postController.getAll = catchAsync( async (req, res, next ) => {
         sortedPosts.sort(sortfn);
     }
     if (!sortedPosts) return next(new AppError("Could Not Fetch Posts!", 400));
-    const message = req.message || "Welcome!"
-    res.status(200).send({ message, sortedPosts });
+    res.status(200).send({ status: "OK", sortedPosts });
 });
 
 // delete post
