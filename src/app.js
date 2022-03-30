@@ -1,8 +1,9 @@
-const cors            = require('cors');
-const morgan          = require('morgan');
-const express         = require('express');
-const AppError        = require('./errors/appError');
-const appErrorHandler = require('./errors/app_error_handler');
+const cors                 = require('cors');
+const morgan               = require('morgan');
+const express              = require('express');
+const AppError             = require('./errors/appError');
+const { cloudinaryConfig } = require('./utils/cloudinary');
+const appErrorHandler      = require('./errors/app_error_handler');
 
 // Initalize app
 const app = express();
@@ -16,11 +17,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 // enable cors for specific route
-app.use(cors())
+app.use(cors({
+  origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:3001', "http://localhost:3002"],
+  credentials: true
+}))
+app.use( (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', true);
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'POST');
+  next()
+})
+
 
 // enable morgan
 app.use(morgan('dev'));
 
+// config cloudinary
+app.use('*', cloudinaryConfig);
 
 //ROUTES
 app.use('/api/v1/users', require('./routes/userRoute'));
