@@ -20,8 +20,10 @@ const postSchema = new Schema({
         lowercase: true,
         required: true
     },
+    comments: [],
     upvotes: {
-        type: Number
+        type: Number,
+        default: 0
     }
 },
 {

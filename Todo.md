@@ -11,7 +11,7 @@
 - [x] Delete post endpoint
 - [x] Delete comment endpoint
 - [x] Delete comment reply endpoint
-- [ ] Add sorting to getAllPosts endpoint
+- [x] Add sorting to getAllPosts endpoint
 - [ ] Edit profile endpoint
 - [ ] Add endpoint to increase or decrease upvotes
 - [ ] Get one post enpoint

@@ -1,3 +1,4 @@
+const { Post }    = require('../models/post');
 const { Comment } = require('../models/comment');
 const AppError    = require('../errors/appError');
 const catchAsync  = require('../utils/catchAsync');
@@ -22,10 +23,15 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
         currComment.comments.push(data);
         await currComment.save();
     } else {
+        // get post
+        let post = await Post.findOne({ _id: postId });
+        if (!post) return next(new AppError("Post Not Found!", 404));
+
         currComment = new Comment({ postId });
         
         currComment.comments.push(data);
         await currComment.save();
+        post.comments.push(currComment?._id); await post.save();
     }
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
     const comments = currComment.comments;

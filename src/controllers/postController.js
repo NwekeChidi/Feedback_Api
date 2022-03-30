@@ -1,6 +1,7 @@
-const { Post } = require("../models/post");
+const { Post }   = require("../models/post");
+const sorters    = require('../utils/sorters');
+const AppError   = require("../errors/appError");
 const catchAsync = require("../utils/catchAsync");
-const AppError = require("../errors/appError");
 
 const postController = {};
 
@@ -19,10 +20,21 @@ postController.createPost = catchAsync( async ( req, res, next ) => {
 
 // get all posts
 postController.getAll = catchAsync( async (req, res, next ) => {
-    const allPost = await Post.find({}).sort({created_at: 'desc'}).exec();
-    if (!allPost) return next(new AppError("Could Not Fetch Posts!", 400));
+    const sortBy = req.params?.sortBy, category = req.params?.filter;
+
+    let sortedPosts; const sortfn = sorters.sortByFilter(sortBy);
+    if (category === "all") {
+        sortedPosts = await Post.find({});
+        sortedPosts.sort(sortfn);
+    } else {
+        sortedPosts = await Post.aggregate([
+            { $match: { postTag: category } }
+        ]);
+        sortedPosts.sort(sortfn);
+    }
+    if (!sortedPosts) return next(new AppError("Could Not Fetch Posts!", 400));
     const message = req.message || "Welcome!"
-    res.status(200).send({ message, allPost });
+    res.status(200).send({ message, sortedPosts });
 });
 
 // delete post

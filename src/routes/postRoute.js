@@ -13,7 +13,7 @@ router.post(
 
 // fetch posts
 router.get(
-    '/',
+    '/:filter/:sortBy',
     postController.getAll
 );
 
