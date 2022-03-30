@@ -19,9 +19,24 @@ const userSchema = new Schema({
         type : String,
         required : true
     },
+    profilePhotoUrl : {
+        type: String
+    },
+    company : {
+        type: String
+    },
+    title: {
+        type: String
+    },
+    socialUrl: {
+        type: String
+    },
+    mobile: {
+        type: Number
+    },
     token : {
         type : String
-    }
+    },
 },
 {
     timestamps : {

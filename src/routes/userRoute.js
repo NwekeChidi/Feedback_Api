@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const { body } = require('express-validator');
-const { auth } = require('../middlewares/auth');
+const router         = require('express').Router();
+const { body }       = require('express-validator');
+const { auth }       = require('../middlewares/auth');
 const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
 
 // create user
 router.post('/signUp',
@@ -19,5 +20,11 @@ router.post('/login',
 router.post('/logout',
             auth,
             authController.logout);
+
+// edit profile
+router.patch('/updateProfile',
+            auth,
+            userController.uploadImage,
+            userController.editProfile);
 
 module.exports = router
