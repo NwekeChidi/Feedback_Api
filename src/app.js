@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 //Serve static file
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 // enable cors for specific route
 app.use(cors({
@@ -25,7 +25,7 @@ app.use( (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', true);
   res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', 'POST');
+  //res.header('Access-Control-Allow-Methods', 'POST');
   next()
 })
 
@@ -34,7 +34,7 @@ app.use( (req, res, next) => {
 app.use(morgan('dev'));
 
 // config cloudinary
-app.use('*', cloudinaryConfig);
+//app.use('*', cloudinaryConfig);
 
 //ROUTES
 app.use('/api/v1/users', require('./routes/userRoute'));
