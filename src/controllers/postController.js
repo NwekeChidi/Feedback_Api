@@ -7,11 +7,11 @@ const postController = {};
 // create post
 postController.createPost = catchAsync( async ( req, res, next ) => {
     let { title, feedback, postTag } = req.body;
-    postTag = postTag.toLowerCase();
+    //postTag = postTag.toLowerCase();
 
     if (!feedback || !postTag ) return next(new AppError("Cannot Post Empty Feedback Or Tag", 401));
 
-    const newPost = await new Post({title, feedback, author: req.USER_ID, postTag}).save();
+    const newPost = await new Post({ title, feedback, author: req.USER_ID, postTag }).save();
     if (!newPost) return next(new AppError("Could Not Create Post", 400));
 
     req.message = "Post Created Successfully!";
