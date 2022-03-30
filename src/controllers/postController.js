@@ -14,7 +14,7 @@ postController.createPost = catchAsync( async ( req, res, next ) => {
     const newPost = await new Post({ title, feedback, author: req.USER_ID, postTag }).save();
     if (!newPost) return next(new AppError("Could Not Create Post", 400));
 
-    req.status(200).send({
+    res.status(200).send({
         message: "Post Created Successfully!"
     });
 })
