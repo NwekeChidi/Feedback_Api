@@ -23,15 +23,13 @@ userAuth.signup = catchAsync(async (req, res, next) => {
     const userExist = await User.exists({ email });
     if (userExist) return next(new AppError("User With Email Already Exists!", 400));
 
-
-    // Sign Token
-    const token = jwt.sign(user.userName);
-    user = await user.save();
-
     // hash passwords
     const passwordHash = await bcrypt.hash(password)
     const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
 
+    // Sign Token
+    const token = jwt.sign(user.userName);
+    user = await user.save();
 
     if (!user) return next( new AppError("Could Not Creat User!", 403));
     
