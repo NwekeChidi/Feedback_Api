@@ -7,7 +7,6 @@ const postController = {};
 // create post
 postController.createPost = catchAsync( async ( req, res, next ) => {
     let { title, feedback, postTag } = req.body;
-    //postTag = postTag.toLowerCase();
 
     if (!feedback || !postTag ) return next(new AppError("Cannot Post Empty Feedback Or Tag", 401));
 
