@@ -25,10 +25,12 @@ userAuth.signup = catchAsync(async (req, res, next) => {
 
     // hash passwords
     const passwordHash = await bcrypt.hash(password)
-    const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
 
     // Sign Token
     const token = jwt.sign(user.userName);
+
+    // save user
+    const user = await new User({ fullName, userName, email, password: passwordHash, token }).save();
     user = await user.save();
 
     if (!user) return next( new AppError("Could Not Creat User!", 403));
