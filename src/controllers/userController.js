@@ -55,7 +55,7 @@ userController.editProfile = catchAsync( async (req, res, next) => {
 });
 
 userController.getMe = catchAsync( async (req, res, next) => {
-    const me = handlerFactory.getOne(User, req.USER_ID);
+    const me = await handlerFactory.getOne(User, req.USER_ID);
     if (!me) return next(new AppError("Error Retrieving Profile!", 400));
     res.status(200).send({
         message: "Successfully Retrieved Profile",
