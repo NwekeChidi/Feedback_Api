@@ -1,6 +1,7 @@
 const { Post }   = require("../models/post");
 const { User }   = require("../models/user");
 const sorters    = require("../utils/sorters");
+const { Comment } = require("../models/comment");
 const AppError   = require("../errors/appError");
 const catchAsync = require("../utils/catchAsync");
 const handlerFactory = require("../utils/handlerFactory");
@@ -60,11 +61,12 @@ postController.upvote = catchAsync( async (req, res, next ) => {
 
     if (!currPost) return next(new AppError(`Post with id: ${postId} not found!`, 400));
     // check if user has upvoted post before
-    if ( currPost?.upvoters.includes(req.USER_ID) ){
-        currPost.upvoters.slice(currPost.upvoters.indexOf(req.USER_ID), 1);
+    let id = req.USER_ID;
+    if ( currPost?.upvoters.includes(id) ){
+        currPost.upvoters.splice(currPost.upvoters.indexOf(id), 1);
         currPost.upvotes -= 1;
     } else {
-        currPost.upvoters.push(req.USER_ID);
+        currPost.upvoters.push(id);
         currPost.upvotes += 1;
     }
     currPost.save( (err, result) => {
@@ -78,12 +80,27 @@ postController.upvote = catchAsync( async (req, res, next ) => {
 // get one post
 postController.getOnePost = catchAsync( async (req, res, next) => {
     const postId = req.params.postId;
-    const post = await handlerFactory.getOne(Post, postId);
-
-    if (!post) return next(new AppError(`Post with id: ${postId} not found!`, 400));
-    res.status(200).send({
-        message: "Post Retrieved Successfully!",
-        post
+    handlerFactory.getOne(Post, postId).populate({ path: "comments"}).then((err, result) => {
+        if (err) {
+            console.log(err)
+            return next(new AppError("Could Not Retrieve Post!", 400))}
+        else res.status(200).send({
+                message: "Post Retrieved Successfully!",
+                result
+            })
     })
+
+    // if (!post) return next(new AppError(`Post with id: ${postId} not found!`, 400));
+
+    // post.populate("comments").then((err, result) => {
+    //     if (err) {
+    //         console.log(err)
+    //         return next(new AppError("Could Not Retrieve Post!", 400))}
+    //     else res.status(200).send({
+    //             message: "Post Retrieved Successfully!",
+    //             result
+    //         })
+    // })
+    
 })
 module.exports = postController;
