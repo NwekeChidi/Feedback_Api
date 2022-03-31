@@ -50,5 +50,27 @@ postController.deletePost = catchAsync( async (req, res, next ) => {
     await currPost.remove();
 
     res.status(200).send({ message: "Post Deleted Successfully!"});
+});
+
+// upvote post
+postController.upvote = catchAsync( async (req, res, next ) => {
+    const postId = req.params.postId;
+    const currPost = await Post.findById({ _id: postId });
+
+    if (!currPost) return next(new AppError(`Post with id: ${postId} not found!`, 400));
+    // check if user has upvoted post before
+    if ( currPost?.upvoters.includes(req.USER_ID) ){
+        currPost.upvoters.slice(currPost.upvoters.indexOf(postId), 1);
+        currPost.upvotes -= 1;
+    } else {
+        currPost.upvoters.push(req.USER_ID);
+        currPost.upvotes += 1;
+    }
+    currPost.save( (err, result) => {
+        if (err) return next(new AppError("Could not upvote post", 400));
+        else res.status(200).send({
+            message: "Upvote Successful!"
+        })
+    });
 })
 module.exports = postController;

@@ -14,7 +14,7 @@
 - [x] Add sorting to getAllPosts endpoint
 - [x] Refactor posts creation
 - [x] Refactor comment creation
-- [ ] Add Upvotes endpoint
+- [x] Add Upvotes endpoint
 - [ ] Edit profile endpoint
 - [ ] Add endpoint to increase or decrease upvotes
 - [ ] Get one post enpoint

@@ -49,6 +49,13 @@ router.delete(
     '/deleteCommentReply/:commentId/:replyId',
     auth,
     commentController.deleteCommentReply
+);
+
+// upvote post
+router.patch(
+    '/upvote/:postId',
+    auth,
+    postController.upvote
 )
 
 module.exports = router;
