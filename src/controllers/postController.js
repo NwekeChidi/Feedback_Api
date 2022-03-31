@@ -80,27 +80,13 @@ postController.upvote = catchAsync( async (req, res, next ) => {
 // get one post
 postController.getOnePost = catchAsync( async (req, res, next) => {
     const postId = req.params.postId;
-    handlerFactory.getOne(Post, postId).populate({ path: "comments"}).then((err, result) => {
-        if (err) {
-            console.log(err)
+    handlerFactory.getOne(Post, postId).populate({ path: "comments"}).then(result => {
+        if (!result) {
             return next(new AppError("Could Not Retrieve Post!", 400))}
         else res.status(200).send({
                 message: "Post Retrieved Successfully!",
                 result
             })
-    })
-
-    // if (!post) return next(new AppError(`Post with id: ${postId} not found!`, 400));
-
-    // post.populate("comments").then((err, result) => {
-    //     if (err) {
-    //         console.log(err)
-    //         return next(new AppError("Could Not Retrieve Post!", 400))}
-    //     else res.status(200).send({
-    //             message: "Post Retrieved Successfully!",
-    //             result
-    //         })
-    // })
-    
+    });
 })
 module.exports = postController;
