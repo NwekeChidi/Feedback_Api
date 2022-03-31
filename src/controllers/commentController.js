@@ -1,4 +1,5 @@
 const { Post }    = require('../models/post');
+const { User }    = require('../models/user');
 const { Comment } = require('../models/comment');
 const AppError    = require('../errors/appError');
 const catchAsync  = require('../utils/catchAsync');
@@ -12,6 +13,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
 
     const data = {
         author: req.USER_ID,
+        authorName: req.fullName,
         comment,
         sorter: 1
     }
@@ -50,6 +52,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
 
     const data = {
         author: req.USER_ID,
+        authorName: req.fullName,
         comment,
         sorter: 1
     }

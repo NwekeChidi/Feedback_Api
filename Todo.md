@@ -13,7 +13,7 @@
 - [x] Delete comment reply endpoint
 - [x] Add sorting to getAllPosts endpoint
 - [x] Refactor posts creation
-- [ ] Refactor comment creation with database population
+- [x] Refactor comment creation
 - [ ] Add Upvotes endpoint
 - [ ] Edit profile endpoint
 - [ ] Add endpoint to increase or decrease upvotes
