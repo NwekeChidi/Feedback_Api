@@ -14,16 +14,19 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    authorName: {
-        type: String
-    },
+    authorName: String,
     postTag: {
         type: String,
         enum: ["ui", "ux", "enhancement", "bug", "feature"],
         lowercase: true,
         required: true
     },
-    comments: [],
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ],
     upvotes: {
         type: Number,
         default: 0
