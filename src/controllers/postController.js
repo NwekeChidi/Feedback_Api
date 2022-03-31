@@ -61,7 +61,7 @@ postController.upvote = catchAsync( async (req, res, next ) => {
     if (!currPost) return next(new AppError(`Post with id: ${postId} not found!`, 400));
     // check if user has upvoted post before
     if ( currPost?.upvoters.includes(req.USER_ID) ){
-        currPost.upvoters.slice(currPost.upvoters.indexOf(postId), 1);
+        currPost.upvoters.slice(currPost.upvoters.indexOf(req.USER_ID), 1);
         currPost.upvotes -= 1;
     } else {
         currPost.upvoters.push(req.USER_ID);
