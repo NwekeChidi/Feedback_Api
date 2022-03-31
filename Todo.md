@@ -18,7 +18,7 @@
 - [x] Edit profile endpoint
 - [x] Get one post enpoint
 - [x] Add endpoint to get profile
-- [ ] Forgot password endpoint
+- [-] Forgot password endpoint
 - [ ] Add tests
 - [ ] Add examples
 - [ ] Update documentation
