@@ -8,8 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node \"src/server.js\"",
+    "dev": "node \"src/server.js\""
   },
   "keywords": [],
   "author": "",
