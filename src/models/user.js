@@ -34,6 +34,12 @@ const userSchema = new Schema({
     mobile: {
         type: Number
     },
+    posts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
     token : {
         type : String
     },
