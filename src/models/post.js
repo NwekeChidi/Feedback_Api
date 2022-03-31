@@ -30,7 +30,13 @@ const postSchema = new Schema({
     upvotes: {
         type: Number,
         default: 0
-    }
+    },
+    upvoters: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ]
 },
 {
     timestamps : {
