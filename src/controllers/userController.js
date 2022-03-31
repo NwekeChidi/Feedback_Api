@@ -45,13 +45,8 @@ userController.editProfile = catchAsync( async (req, res, next) => {
         (err, result) => {
             if (err) return next(new AppError("Problem updating profile!", 400));
             else {
-                const {
-                    userName, email, token, password, created_at, updated_at, __v, ...newDetails
-                } = result["_doc"];
-                
                 return res.status(200).send({
-                message: "Profile Update Successful!",
-                newDetails
+                message: "Profile Update Successful!"
                 });
             }
         }

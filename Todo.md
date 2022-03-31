@@ -15,7 +15,7 @@
 - [x] Refactor posts creation
 - [x] Refactor comment creation
 - [x] Add endpoint to increase or decrease upvotes
-- [ ] Edit profile endpoint
+- [x] Edit profile endpoint
 - [ ] Get one post enpoint
 - [ ] Forgot password endpoint
 - [ ] Add tests
