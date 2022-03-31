@@ -56,6 +56,12 @@ router.patch(
     '/upvote/:postId',
     auth,
     postController.upvote
+);
+
+// get one post
+router.get(
+    '/:postId',
+    postController.getOnePost
 )
 
 module.exports = router;

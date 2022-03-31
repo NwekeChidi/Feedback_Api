@@ -3,6 +3,7 @@ const { User }   = require("../models/user");
 const sorters    = require("../utils/sorters");
 const AppError   = require("../errors/appError");
 const catchAsync = require("../utils/catchAsync");
+const handlerFactory = require("../utils/handlerFactory");
 
 const postController = {};
 
@@ -72,5 +73,17 @@ postController.upvote = catchAsync( async (req, res, next ) => {
             message: "Upvote Successful!"
         })
     });
+});
+
+// get one post
+postController.getOnePost = catchAsync( async (req, res, next) => {
+    const postId = req.params.postId;
+    const post = await handlerFactory.getOne(Post, postId);
+
+    if (!post) return next(new AppError(`Post with id: ${postId} not found!`, 400));
+    res.status(200).send({
+        message: "Post Retrieved Successfully!",
+        post
+    })
 })
 module.exports = postController;
