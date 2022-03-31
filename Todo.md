@@ -12,6 +12,9 @@
 - [x] Delete comment endpoint
 - [x] Delete comment reply endpoint
 - [x] Add sorting to getAllPosts endpoint
+- [ ] Refactor posts creation with database population
+- [ ] Refactor comment creation with database population
+- [ ] Add Upvotes endpoint
 - [ ] Edit profile endpoint
 - [ ] Add endpoint to increase or decrease upvotes
 - [ ] Get one post enpoint
