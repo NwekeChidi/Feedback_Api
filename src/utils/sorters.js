@@ -14,3 +14,7 @@ exports.sortByFilter = (category) => {
         return a.comments.length - b.comments.length;
     }
 }
+
+exports.sortByDate = (a, b) => {
+    return b.created_at - a.created_at;
+}
