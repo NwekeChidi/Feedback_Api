@@ -17,6 +17,7 @@
 - [x] Add endpoint to increase or decrease upvotes
 - [x] Edit profile endpoint
 - [x] Get one post enpoint
+- [x] Add endpoint to get profile
 - [ ] Forgot password endpoint
 - [ ] Add tests
 - [ ] Add examples
