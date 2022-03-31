@@ -1,5 +1,6 @@
 const { Post }   = require("../models/post");
-const sorters    = require('../utils/sorters');
+const { User }   = require("../models/user");
+const sorters    = require("../utils/sorters");
 const AppError   = require("../errors/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -11,7 +12,10 @@ postController.createPost = catchAsync( async ( req, res, next ) => {
 
     if (!feedback || !postTag ) return next(new AppError("Cannot Post Empty Feedback Or Tag", 401));
 
-    const newPost = await new Post({ title, feedback, author: req.USER_ID, postTag }).save();
+    // get current user
+    const user = await User.findById({ _id: req.USER_ID });
+
+    const newPost = await new Post({ title, feedback, author: req.USER_ID, authorName: user.fullName, postTag }).save();
     if (!newPost) return next(new AppError("Could Not Create Post", 400));
 
     res.status(200).send({

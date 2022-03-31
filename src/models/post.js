@@ -14,6 +14,9 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+    authorName: {
+        type: String
+    },
     postTag: {
         type: String,
         enum: ["ui", "ux", "enhancement", "bug", "feature"],
