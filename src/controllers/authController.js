@@ -59,7 +59,7 @@ userAuth.login = catchAsync(async (req, res, next) => {
     //send response
     res.status(200).send({
         message: `Hello ${user.userName}! Welcome To Our Feedback API`,
-        data : { accessToken, fullName: user.fullName, userName: user.userName }
+        data : { userId: user._id, accessToken, fullName: user.fullName, userName: user.userName }
     });
 });
 
