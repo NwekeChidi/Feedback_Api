@@ -4,6 +4,7 @@ const AppError            = require('../errors/appError');
 const catchAsync          = require('../utils/catchAsync');
 const { cloudUpload }     = require('../utils/cloudinary');
 const upload              = require('../middlewares/multer');
+const handlerFactory      = require('../utils/handlerFactory');
 
 const userController = {};
 
@@ -51,6 +52,15 @@ userController.editProfile = catchAsync( async (req, res, next) => {
             }
         }
     )
+});
+
+userController.getMe = catchAsync( async (req, res, next) => {
+    const me = handlerFactory.getOne(User, req.USER_ID);
+    if (!me) return next(new AppError("Error Retrieving Profile!", 400));
+    res.status(200).send({
+        message: "Successfully Retrieved Profile",
+        me
+    })
 })
 
 module.exports = userController;

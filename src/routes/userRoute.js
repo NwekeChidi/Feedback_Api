@@ -27,4 +27,8 @@ router.patch('/updateProfile',
             userController.uploadImage,
             userController.editProfile);
 
+router.get('/myProfile',
+            auth,
+            userController.getMe);
+
 module.exports = router
