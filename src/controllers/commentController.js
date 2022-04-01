@@ -38,7 +38,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
     }
     post.commentCount = currComment.comments.length;
     await post.save();
-    
+
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
     const comments = currComment.comments;
     comments.sort((a, b) => b.sorter - a.sorter)
@@ -82,13 +82,16 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
 commentController.deleteComment = catchAsync( async (req, res, next) => {
     const commentId = req.params?.commentId;
     const currComment = await Comment.findOne({ commentId });
+
     if (!currComment) return next( new AppError(`Comment with id: ${commentId}, not found!`));
+    // get postId
+    const post = await Post.findById({ _id: currComment.postId });
+    post.comments.splice(post.comments.indexOf(commentId), 1);
+    await post.save();
+
     await currComment.comments.id(commentId).remove();
     currComment.markModified('comments');
     await currComment.save();
-
-    // remove from post
-    post = await Post.find
 
     res.status(200).send({ message: "Comment Successfully Deleted!"});
 });
