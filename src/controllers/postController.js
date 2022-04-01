@@ -31,14 +31,14 @@ postController.getAll = catchAsync( async (req, res, next ) => {
     let sortedPosts; const sortfn = sorters.sortByFilter(sortBy);
     if (category === "all") {
         sortedPosts = await Post.find({});
-        sortedPosts.sort(sortfn);
+        sortedPosts.sort(sorters.sortByFilter(sortBy));
     } else {
         sortedPosts = await Post.aggregate([
             { $match: { postTag: category } }
         ]);
         sortedPosts.sort(sortfn);
     }
-    sortedPosts.sort(sorters.sortByDate);
+    //sortedPosts.sort(sorters.sortByDate);
     if (!sortedPosts) return next(new AppError("Could Not Fetch Posts!", 400));
     res.status(200).send({ status: "OK", sortedPosts });
 });
