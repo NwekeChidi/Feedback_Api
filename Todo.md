@@ -20,5 +20,4 @@
 - [x] Add endpoint to get profile
 - [-] Forgot password endpoint
 - [x] Add a README
-- [ ] Add examples
 - [ ] Add tests
