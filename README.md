@@ -11,9 +11,9 @@ This is a basic feedback API service with the following features:
 - See a feedback feed
 - Comment on a feedback
 - Reply to a comment
-- Delete a feedback
-- Delete a comment
-- Delete a reply to a comment
+- Delete their feedback
+- Delete their comment 
+- Delete their reply to a comment
 - Edit profile
 - View Profile
 - See a feedback

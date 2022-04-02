@@ -38,7 +38,6 @@ postController.getAll = catchAsync( async (req, res, next ) => {
         ]);
         sortedPosts.sort(sortfn);
     }
-    //sortedPosts.sort(sorters.sortByDate);
     if (!sortedPosts) return next(new AppError("Could Not Fetch Posts!", 400));
     res.status(200).send({ status: "OK", sortedPosts });
 });
