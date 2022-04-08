@@ -2,7 +2,7 @@ const cors                 = require('cors');
 const morgan               = require('morgan');
 const express              = require('express');
 const AppError             = require('./errors/appError');
-const { cloudinaryConfig } = require('./utils/cloudinary');
+// const { cloudinaryConfig } = require('./utils/cloudinary');
 const appErrorHandler      = require('./errors/app_error_handler');
 
 // Initalize app
@@ -28,8 +28,8 @@ app.use( (req, res, next) => {
 // enable morgan
 app.use(morgan('dev'));
 
-// config cloudinary
-app.use('*', cloudinaryConfig);
+// // config cloudinary
+// app.use('*', cloudinaryConfig);
 
 //ROUTES
 app.use('/api/v1/users', require('./routes/userRoute'));
