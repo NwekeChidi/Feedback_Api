@@ -13,12 +13,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // enable cors for specific route
+const allowedOrigins = ["https://shimmering-sprite-84ee41.netlify.app", "http://localhost:3000"];
 app.use(cors({
-  origin: ["https://shimmering-sprite-84ee41.netlify.app", "http://localhost:3000"],
+  origin: allowedOrigins,
   credentials: true
 }))
 app.use( (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin;
+  console.log(origin);
+  if (allowedOrigins.includes(origin)) res.setHeader('Access-Control-Allow-Origin', origin);
+  // res.header('Access-Control-Allow-Origin', '*');
   //res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', true);
   res.header('Access-Control-Allow-Credentials', true);
