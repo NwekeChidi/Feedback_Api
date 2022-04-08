@@ -13,16 +13,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // enable cors for specific route
-// app.use(cors({
-//   origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:3001', "http://localhost:3002"],
-//   credentials: true
-// }))
-// app.use( (req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   res.header('Access-Control-Allow-Headers', true);
-//   res.header('Access-Control-Allow-Credentials', true);
-//   next()
-// })
+app.use(cors({
+  origin: "https://shimmering-sprite-84ee41.netlify.app",
+  credentials: true
+}))
+app.use( (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://shimmering-sprite-84ee41.netlify.app');
+  res.header('Access-Control-Allow-Headers', true);
+  res.header('Access-Control-Allow-Credentials', true);
+  next()
+})
 
 
 // enable morgan
