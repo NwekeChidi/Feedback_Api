@@ -36,7 +36,6 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
         await currComment.save();
         post.comments.push(currComment?._id);
     }
-    post.commentCount = currComment.comments.length;
     await post.save();
 
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));

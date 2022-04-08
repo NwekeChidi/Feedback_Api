@@ -27,7 +27,6 @@ const postSchema = new Schema({
             ref: "Comment"
         }
     ],
-    commentCount: Number,
     upvotes: {
         type: Number,
         default: 0
