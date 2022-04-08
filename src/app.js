@@ -18,7 +18,8 @@ app.use(cors({
   credentials: true
 }))
 app.use( (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', ['https://shimmering-sprite-84ee41.netlify.app', 'localhost:3000']);
+  res.header('Access-Control-Allow-Origin', 'https://shimmering-sprite-84ee41.netlify.app');
+  res.header('Access-Control-Allow-Origin', 'localhost:3000');
   res.header('Access-Control-Allow-Headers', true);
   res.header('Access-Control-Allow-Credentials', true);
   next()
