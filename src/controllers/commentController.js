@@ -18,10 +18,10 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
     }
     
     // check if posts already has comments
-    let currComment = await Comment.findById({ postId });
+    let currComment = await Comment.findOne({ postId });
 
     // get post
-    let post = await Post.findById({ postId });
+    let post = await Post.findOne({ _id: postId });
     if (!post) return next(new AppError("Post Not Found!", 404));
 
     if (currComment){
@@ -49,7 +49,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
 
 // reply a comment
 commentController.replyComment = catchAsync( async (req, res, next) =>{
-    const { comment } = req.body, commentId = req.params.commentId;
+    const { comment } = req.body, commentId = req.params.commentId, commentsId = req.params.mainCommentId;
     if (!comment || !commentId) return next(new AppError("No Reply or comment to reply!", 400));
 
     const data = {
@@ -60,21 +60,22 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     }
     
     // check if posts already has sub comments
-    const currComment = await Comment.findById({ commentId });
+    const allComments = await Comment.findOne({ commentsId });
+    const currComment = allComments.comments.id(commentId);
     console.log(currComment)
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
     
-    const subComments = currComment.comments.id(commentId)?.subComments
+    const subComments = currComment.subComments
     if (!subComments) return next(new AppError(`Could Not Find A Comment With This Id ${commentId}`, 400))
     if (subComments?.length > 1){
         data.sorter += subComments.length;
-        currComment.comments.id(commentId).subComments.push(data);
+        allComments.comments.id(commentId).subComments.push(data);
     } else {
-        currComment.comments.id(commentId).subComments.push(data);
+        allComments.comments.id(commentId).subComments.push(data);
     }
-    await currComment.save();
+    await allComments.save();
     
-    const allCommentReplies = currComment.comments.id(commentId).subComments;
+    const allCommentReplies = allComments.comments.id(commentId).subComments;
     allCommentReplies.sort((a, b) => b.sorter - a.sorter)
 
     res.status(200).send({
