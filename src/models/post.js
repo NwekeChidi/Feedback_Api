@@ -27,12 +27,10 @@ const postSchema = new Schema({
             ref: "Comment"
         }
     ],
-    allComments: [
-        {
+    allComments: {
             type: Schema.Types.ObjectId,
             ref: "Comment"
-        }
-    ],
+        },
     upvotes: {
         type: Number,
         default: 0

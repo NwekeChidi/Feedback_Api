@@ -31,7 +31,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
     } else {
         currComment = new Comment({ postId });
         currComment.comments.push(data);
-        post.allComments.push(currComment._id);
+        post.allComments = currComment._id;
         await currComment.save();
     }
     
