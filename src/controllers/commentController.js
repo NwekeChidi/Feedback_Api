@@ -64,6 +64,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
     
     const subComments = currComment.comments.id(commentId)?.subComments
+    if (!subComments) return next(new AppError(`Could Not Find A Comment With This Id ${commentId}`, 400))
     if (subComments?.length > 1){
         data.sorter += subComments.length;
         currComment.comments.id(commentId).subComments.push(data);
