@@ -25,7 +25,7 @@ router.post(
 
 // reply a comment on a post
 router.post(
-    '/replyComment/:commentId',
+    '/replyComment/:mainCommentId/:commentId',
     auth,
     commentController.replyComment
 );
