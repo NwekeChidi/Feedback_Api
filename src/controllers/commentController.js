@@ -34,8 +34,8 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
         await currComment.save();
     }
     
-    console.log(currComment)
-    post.comments.push(currComment.comments.sorter(data.sorter)._id);
+    const newCommentId = currComment.comments[currComment.comments.length - 1]._id;
+    post.comments.push(newCommentId);
     await post.save();
 
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
