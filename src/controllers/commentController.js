@@ -59,14 +59,15 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
         sorter: 1
     }
     
-    // check if posts already has comments
+    // check if posts already has sub comments
     const currComment = await Comment.findOne({ commentId });
-    if (currComment){
-        data.sorter += currComment.comments.id(commentId).subComments.length;
+    const subComments = currComment.comments.id(commentId).subComments
+    if (subComments){
+        data.sorter += subComments.length;
         currComment.comments.id(commentId).subComments.push(data);
         await currComment.save();
     }
-    if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
+    if (!subComments) return next(new AppError("Could Not Comment On Post!", 403));
     const allCommentReplies = currComment.comments.id(commentId).subComments;
     allCommentReplies.sort((a, b) => b.sorter - a.sorter)
 
