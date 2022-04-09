@@ -39,7 +39,7 @@ router.delete(
 
 // delete a comment
 router.delete(
-    '/deleteComment/:commentId',
+    '/deleteComment/:postId/:commentId',
     auth,
     commentController.deleteComment
 );
