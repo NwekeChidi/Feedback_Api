@@ -27,6 +27,12 @@ const postSchema = new Schema({
             ref: "Comment"
         }
     ],
+    allComments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ],
     upvotes: {
         type: Number,
         default: 0
