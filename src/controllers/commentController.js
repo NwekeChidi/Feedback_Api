@@ -87,18 +87,21 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
 
 // Delete comment
 commentController.deleteComment = catchAsync( async (req, res, next) => {
-    const commentId = req.params?.commentId;
-    const currComment = await Comment.findOne({ commentId });
+    const commentId = req.params?.commentId, postId = req.params?.postId;
 
+    const allComments = await Comment.findOne({ postId });
+    if (!allComments) return next(new AppError(`Could Not Find All Comments This Id ${postId}`, 400));
+
+    const currComment = allComments.comments.id(commentId);
     if (!currComment) return next( new AppError(`Comment with id: ${commentId}, not found!`));
     // get postId
     const post = await Post.findById({ _id: currComment.postId });
     post.comments.splice(post.comments.indexOf(commentId), 1);
     await post.save();
 
-    await currComment.comments.id(commentId).remove();
-    currComment.markModified('comments');
-    await currComment.save();
+    await allComments.comments.id(commentId).remove();
+    allComments.markModified('comments');
+    await allComments.save();
 
     res.status(200).send({ message: "Comment Successfully Deleted!"});
 });
