@@ -49,7 +49,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
 
 // reply a comment
 commentController.replyComment = catchAsync( async (req, res, next) =>{
-    const { comment } = req.body, commentId = req.params.commentId, commentsId = req.params.mainCommentId;
+    const { comment } = req.body, commentId = req.params.commentId, postId = req.params.postId;
     if (!comment || !commentId) return next(new AppError("No Reply or comment to reply!", 400));
 
     const data = {
@@ -60,7 +60,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     }
     
     // check if posts already has sub comments
-    const allComments = await Comment.findOne({ commentsId });
+    const allComments = await Comment.findOne({ postId });
     const currComment = allComments.comments.id(commentId);
     console.log(currComment)
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
