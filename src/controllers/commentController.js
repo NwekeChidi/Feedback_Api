@@ -61,6 +61,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     
     // check if posts already has sub comments
     const currComment = await Comment.findOne({ commentId });
+    console.log(currComment)
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
     
     const subComments = currComment.comments.id(commentId)?.subComments
