@@ -46,7 +46,7 @@ router.delete(
 
 // delete a reply to a comment
 router.delete(
-    '/deleteCommentReply/:commentId/:replyId',
+    '/deleteCommentReply/:postId/:commentId/:replyId',
     auth,
     commentController.deleteCommentReply
 );

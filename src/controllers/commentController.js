@@ -108,11 +108,17 @@ commentController.deleteComment = catchAsync( async (req, res, next) => {
 
 // Delete a reply to a comment
 commentController.deleteCommentReply = catchAsync( async (req, res, next) => {
-    const { commentId, replyId } = req?.params;
-    const currComment = await Comment.findOne({ replyId });
-    await currComment.comments.id(commentId).subComments.id(replyId).remove();
-    currComment.markModified('subcomments');
-    currComment.save();
+    const { postId, commentId, replyId } = req?.params;
+
+    const allComments = await Comment.findOne({ postId });
+    if (!allComments) return next(new AppError(`Could Not Find All Comments This Id ${postId}`, 400));
+
+    const currComment = allComments.comments.id(commentId);
+    if (!currComment) return next( new AppError(`Comment with id: ${commentId}, not found!`));
+
+    await allComments.comments.id(commentId).subComments.id(replyId).remove();
+    allComments.markModified('subcomments');
+    allComments.save();
     res.status(200).send({ message: "Comment Reply Deleted Successfully!" });
 })
 
