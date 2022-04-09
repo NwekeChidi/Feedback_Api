@@ -95,7 +95,7 @@ commentController.deleteComment = catchAsync( async (req, res, next) => {
     const currComment = allComments.comments.id(commentId);
     if (!currComment) return next( new AppError(`Comment with id: ${commentId}, not found!`));
     // get postId
-    const post = await Post.findById({ _id: currComment.postId });
+    const post = await Post.findById({ _id: postId });
     post.comments.splice(post.comments.indexOf(commentId), 1);
     await post.save();
 
