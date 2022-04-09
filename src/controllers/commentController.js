@@ -61,12 +61,12 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     
     // check if posts already has sub comments
     const allComments = await Comment.findOne({ postId });
+    if (!allComments) return next(new AppError(`Could Not Find All Comments This Id ${postId}`, 400));
+
     const currComment = allComments.comments.id(commentId);
-    console.log(currComment)
-    if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
+    if (!currComment) return next(new AppError(`Could Not Find A Comment With This Id ${commentId}`, 400));
     
-    const subComments = currComment.subComments
-    if (!subComments) return next(new AppError(`Could Not Find A Comment With This Id ${commentId}`, 400))
+    const subComments = currComment.subComments; 
     if (subComments?.length > 1){
         data.sorter += subComments.length;
         allComments.comments.id(commentId).subComments.push(data);
