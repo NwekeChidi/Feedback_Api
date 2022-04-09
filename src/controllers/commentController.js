@@ -18,10 +18,10 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
     }
     
     // check if posts already has comments
-    let currComment = await Comment.findOne({ postId });
+    let currComment = await Comment.findById({ postId });
 
     // get post
-    let post = await Post.findOne({ _id: postId });
+    let post = await Post.findById({ postId });
     if (!post) return next(new AppError("Post Not Found!", 404));
 
     if (currComment){
@@ -60,7 +60,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     }
     
     // check if posts already has sub comments
-    const currComment = await Comment.findOne({ commentId });
+    const currComment = await Comment.findById({ commentId });
     console.log(currComment)
     if (!currComment) return next(new AppError("Could Not Comment On Post!", 403));
     
