@@ -15,6 +15,7 @@ const postSchema = new Schema({
         ref: "User"
     },
     authorName: String,
+    authorUserName: String,
     postTag: {
         type: String,
         enum: ["ui", "ux", "enhancement", "bug", "feature"],

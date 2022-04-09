@@ -15,5 +15,6 @@ exports.auth = async (req, res, next) => {
 
     req.USER_ID = user?._id || undefined;
     req.fullName = user?.fullName || undefined;
+    req.userName = user?.userName || undefined;
     next();
 }

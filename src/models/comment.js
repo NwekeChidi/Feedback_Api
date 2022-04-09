@@ -16,6 +16,7 @@ const commentSchemma = new Schema(
                     index: true
                 },
                 authorName: String,
+                authorUserName: String,
                 comment: { type: String },
                 time: {type: Date, default: new Date()},
                 sorter : { type: Number },
@@ -27,6 +28,7 @@ const commentSchemma = new Schema(
                             index: true
                         },
                         authorName: String,
+                        authorUserName: String,
                         comment: {type: String},
                         time: {type: Date, default: new Date()},
                         sorter: { type: Number }

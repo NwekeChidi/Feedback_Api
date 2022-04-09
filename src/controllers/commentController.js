@@ -13,6 +13,7 @@ commentController.postComment = catchAsync( async (req, res, next) =>{
     const data = {
         author: req.USER_ID,
         authorName: req.fullName,
+        authorUserName: req.userName,
         comment,
         sorter: 1
     }
@@ -57,6 +58,7 @@ commentController.replyComment = catchAsync( async (req, res, next) =>{
     const data = {
         author: req.USER_ID,
         authorName: req.fullName,
+        authorUserName: req.userName,
         comment,
         sorter: 1
     }
