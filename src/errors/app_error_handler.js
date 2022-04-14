@@ -2,7 +2,7 @@ const AppError = require('./appError');
 require('dotenv').config();
 
 module.exports = (err, req, res, next) => {
-    if (err instanceof AppError) {
+    if (process.env.NODE_ENV === 'development' && err instanceof AppError) {
         res.status(err.statusCode).json({
             status: err.status,
             error: err,
