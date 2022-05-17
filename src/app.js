@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // enable cors for specific route
-const allowedOrigins = ["https://shimmering-sprite-84ee41.netlify.app", "http://localhost:3000"];
+const allowedOrigins = ["https://review-rabbit.netlify.app", "http://localhost:3000"];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true
