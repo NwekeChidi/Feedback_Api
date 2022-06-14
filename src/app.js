@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 // enable cors for specific route
 const allowedOrigins = [
   "https://review-rabbit.netlify.app",
-  "https://reviewrabbit.vercel.app/",
+  "https://reviewrabbit.vercel.app",
   "http://localhost:3000"
 ];
 app.use(cors({
